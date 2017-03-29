@@ -1,13 +1,32 @@
 module Etherscanio
   class Call
-    attr_accessor :mod, :action
+    attr_accessor :mod,
+                  :action,
+                  :api_key,
+                  :address,
+                  :tag,
+                  :startblock,
+                  :endblock,
+                  :sort,
+                  :page,
+                  :offset,
+                  :sort,
+                  :blocktype
     def initialize(mod, action)
+      @base = 'https://api.etherscan.io/api?'
       @mod = mod
       @action = action
+      @api_key = false
     end
 
     def to_s
-      'module=' + mod + '&action=' + action
+      uri = 'module=' + mod + '&action=' + action
+      uri += '&apikey=' + api_key if api_key
+      uri += '&address=' + address if address
+      uri += '&startblock=' + startblock.to_s if startblock
+      uri += '&endblock=' + endblock.to_s if endblock
+      uri += '&tag=' + tag if tag
+      uri
     end
   end
 end
