@@ -4,6 +4,14 @@ module Etherscanio
       nil
     end
 
+    def txlist(address, startblock, endblock)
+      call = Etherscanio::Call.new('account', 'txlist')
+      call.address = address
+      call.startblock = startblock
+      call.endblock = endblock
+      call.fetch
+    end
+
     def account_balance(address, tag)
       call = Etherscanio::Call.new('account', 'balance')
       call.address = address
