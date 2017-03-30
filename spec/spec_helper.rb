@@ -36,6 +36,7 @@ account_getminedblocks_page_uri = 'http://api.etherscan.io/api?action=getminedbl
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
+  
   config.before(:each) do
     stub_request(:get, account_balance_uri)
       .with(headers: general_headers)
