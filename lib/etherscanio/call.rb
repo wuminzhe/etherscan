@@ -32,6 +32,7 @@ module Etherscanio
       uri += address_fragment
       uri += '&startblock=' + startblock.to_s if startblock
       uri += '&endblock=' + endblock.to_s if endblock
+      uri += '&blocktype=' + blocktype if blocktype
       uri += '&offset=' + offset.to_s if offset
       uri += '&sort=' + sort if sort
       uri += '&page=' + page.to_s if page

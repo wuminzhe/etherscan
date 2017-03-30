@@ -33,6 +33,15 @@ module Etherscanio
       call.fetch
     end
 
+    def getminedblocks(address, blocktype, page = nil, offset = nil)
+      call = Etherscanio::Call.new('account', 'getminedblocks')
+      call.page = page
+      call.offset = offset
+      call.address = address
+      call.blocktype = blocktype
+      call.fetch
+    end
+
     def account_balancemulti(address, tag)
       call = Etherscanio::Call.new('account', 'balancemulti')
       call.address = address

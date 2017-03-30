@@ -28,6 +28,11 @@ account_txlist_internal_response = File.read('./spec/fixtures/account/txlist_int
 account_txlist_internal_paging_uri = 'http://api.etherscan.io/api?action=txlistinternal&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&endblock=99999999&module=account&offset=10&page=1&sort=desc&startblock=0'
 account_txlist_internal_response = File.read('./spec/fixtures/account/txlist_internal.json')
 
+account_getminedblocks_uri = 'http://api.etherscan.io/api?action=getminedblocks&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&blocktype=block&module=account'
+account_getminedblocks_response = File.read('./spec/fixtures/account/getminedblocks.json')
+
+account_getminedblocks_page_uri = 'http://api.etherscan.io/api?action=getminedblocks&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&blocktype=block&module=account&offset=10&page=1'
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
@@ -56,6 +61,13 @@ RSpec.configure do |config|
       .with(headers: general_headers)
       .to_return(status: 200, body: account_txlist_internal_response, headers: {})
 
+    stub_request(:get, account_getminedblocks_uri)
+      .with(headers: general_headers)
+      .to_return(status: 200, body: account_getminedblocks_response, headers: {})
+
+    stub_request(:get, account_getminedblocks_page_uri)
+      .with(headers: general_headers)
+      .to_return(status: 200, body: account_getminedblocks_response, headers: {})
   end
 
   config.expect_with :rspec do |c|
