@@ -3,9 +3,11 @@ module Etherscanio
     def initialize(_key)
       nil
     end
-
     def account_balance(address, tag)
-      address
+      call = Etherscanio::Call.new('account', 'balance')
+      call.address = address
+      call.tag = tag
+      call.to_s
     end
   end
 end
