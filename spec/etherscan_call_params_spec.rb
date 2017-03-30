@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Etherscanio::Call do
-  let(:uri) { 'https://api.etherscan.io/api?' }
+  let(:uri) { 'http://api.etherscan.io/api?' }
   describe '.address' do
     subject do
       call = Etherscanio::Call.new('foo', 'bar')

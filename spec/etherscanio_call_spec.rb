@@ -24,8 +24,8 @@ describe Etherscanio::Call do
       subject { Etherscanio::Call.new(mod, action).to_s }
       let(:mod) { 'foo' }
       let(:action) { 'bar' }
-      let(:uri) { 'https://api.etherscan.io/api?' }
-      it { is_expected.to eq(uri  + 'module=foo&action=bar') }
+      let(:uri) { 'http://api.etherscan.io/api?' }
+      it { is_expected.to eq(uri + 'module=foo&action=bar') }
     end
   end
 end

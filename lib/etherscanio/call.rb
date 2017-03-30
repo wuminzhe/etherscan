@@ -1,3 +1,4 @@
+require 'rest-client'
 module Etherscanio
   class Call
     attr_accessor :mod,
@@ -13,10 +14,16 @@ module Etherscanio
                   :sort,
                   :blocktype
     def initialize(mod, action)
-      @base = 'https://api.etherscan.io/api?'
+      @base = 'http://api.etherscan.io/api?'
       @mod = mod
       @action = action
       @api_key = false
+    end
+
+    def fetch
+      res = RestClient.get(to_s, {}).body
+      parsed = JSON.parse(res)
+      JSON.generate(parsed)
     end
 
     def to_s
