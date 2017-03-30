@@ -16,6 +16,10 @@ account_balance_uri = 'http://api.etherscan.io/api?action=balance&address=0xde0b
 multiple_account_balance_uri = 'http://api.etherscan.io/api?action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&module=account&tag=latest'
 multiple_account_balance_response = File.read('./spec/fixtures/account/balance_multiple.json')
 
+account_txlist_uri = '';
+account_txlist_response = File.read('./spec/fixtures/account/txlist.json')
+
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
