@@ -37,6 +37,10 @@ Metrics/BlockNesting:
 Metrics/LineLength:
   Max: 120
 
+# Set max line length to 120
+Metrics/ParameterLists:
+  Max: 6
+
 Style/Documentation:
   Enabled: false
 
