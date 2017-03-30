@@ -8,23 +8,24 @@ describe Etherscanio::Call do
       let(:action) { 'bar' }
       it { is_expected.to be_a(Object) }
     end
-    context 'has mod property' do
+    context '.mod' do
       subject { Etherscanio::Call.new(mod, action).mod }
       let(:mod) { 'foo' }
       let(:action) { 'bar' }
       it { is_expected.to be_a(String) }
     end
-    context 'has action property' do
+    context '.action' do
       subject { Etherscanio::Call.new(mod, action).action }
       let(:mod) { 'foo' }
       let(:action) { 'bar' }
       it { is_expected.to be_a(String) }
     end
-    context 'has action property' do
+    context 'to_s' do
       subject { Etherscanio::Call.new(mod, action).to_s }
       let(:mod) { 'foo' }
       let(:action) { 'bar' }
-      it { is_expected.to eq('module=foo&action=bar') }
+      let(:uri) { 'https://api.etherscan.io/api?' }
+      it { is_expected.to eq(uri  + 'module=foo&action=bar') }
     end
   end
 end

@@ -25,8 +25,10 @@ module Etherscanio
       uri += '&address=' + address if address
       uri += '&startblock=' + startblock.to_s if startblock
       uri += '&endblock=' + endblock.to_s if endblock
+      uri += '&sort=' + sort if sort
+      uri += '&page=' + page.to_s if page
       uri += '&tag=' + tag if tag
-      uri
+      @base + uri
     end
   end
 end

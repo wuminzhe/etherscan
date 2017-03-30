@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Etherscanio::Call do
+  let(:uri) { 'https://api.etherscan.io/api?' }
   describe '.address' do
     subject do
       call = Etherscanio::Call.new('foo', 'bar')
@@ -9,7 +10,7 @@ describe Etherscanio::Call do
     end
     context '123' do
       let(:address) { '123' }
-      it { is_expected.to eq('module=foo&action=bar&address=123') }
+      it { is_expected.to eq(uri + 'module=foo&action=bar&address=123') }
     end
   end
 
@@ -21,7 +22,7 @@ describe Etherscanio::Call do
     end
     context 'house' do
       let(:tag) { 'house' }
-      it { is_expected.to eq('module=foo&action=bar&tag=house') }
+      it { is_expected.to eq(uri + 'module=foo&action=bar&tag=house') }
     end
   end
   describe '.startblock' do
@@ -32,7 +33,7 @@ describe Etherscanio::Call do
     end
     context '1' do
       let(:startblock) { 1 }
-      it { is_expected.to eq('module=foo&action=bar&startblock=1') }
+      it { is_expected.to eq(uri + 'module=foo&action=bar&startblock=1') }
     end
   end
   describe '.endblock' do
@@ -43,7 +44,29 @@ describe Etherscanio::Call do
     end
     context '1' do
       let(:endblock) { 1 }
-      it { is_expected.to eq('module=foo&action=bar&endblock=1') }
+      it { is_expected.to eq(uri + 'module=foo&action=bar&endblock=1') }
+    end
+  end
+  describe '.sort' do
+    subject do
+      call = Etherscanio::Call.new('foo', 'bar')
+      call.sort = sort
+      call.to_s
+    end
+    context 'desc' do
+      let(:sort) { 'desc' }
+      it { is_expected.to eq(uri + 'module=foo&action=bar&sort=desc') }
+    end
+  end
+  describe '.page' do
+    subject do
+      call = Etherscanio::Call.new('foo', 'bar')
+      call.page = page
+      call.to_s
+    end
+    context '1' do
+      let(:page) { 1 }
+      it { is_expected.to eq(uri + 'module=foo&action=bar&page=1') }
     end
   end
 end
