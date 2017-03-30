@@ -19,6 +19,8 @@ multiple_account_balance_response = File.read('./spec/fixtures/account/balance_m
 account_txlist_uri = 'http://api.etherscan.io/api?action=txlist&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&endblock=99999999&module=account&sort=desc&&startblock=0';
 account_txlist_response = File.read('./spec/fixtures/account/txlist.json')
 
+account_txlist_paging_uri = 'http://api.etherscan.io/api?action=txlist&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&endblock=99999999&module=account&page=1&sort=desc&startblock=0'
+account_txlist_paging_response = File.read('./spec/fixtures/account/txlist.json')
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -35,6 +37,10 @@ RSpec.configure do |config|
     stub_request(:get, account_txlist_uri)
       .with(headers: general_headers)
       .to_return(status: 200, body: account_txlist_response, headers: {})
+
+    stub_request(:get, account_txlist_paging_uri)
+      .with(headers: general_headers)
+      .to_return(status: 200, body: account_txlist_paging_response, headers: {})
 
   end
 
