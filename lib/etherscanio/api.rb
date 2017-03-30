@@ -10,5 +10,12 @@ module Etherscanio
       call.tag = tag
       call.fetch
     end
+
+    def account_balancemulti(address, tag)
+      call = Etherscanio::Call.new('account', 'balancemulti')
+      call.address = address
+      call.tag = tag
+      call.fetch
+    end
   end
 end
