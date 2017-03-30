@@ -4,11 +4,12 @@ module Etherscanio
       nil
     end
 
-    def txlist(address, startblock, endblock)
+    def txlist(address, startblock, endblock, sort = 'desc')
       call = Etherscanio::Call.new('account', 'txlist')
       call.address = address
       call.startblock = startblock
       call.endblock = endblock
+      call.sort = sort
       call.fetch
     end
 
