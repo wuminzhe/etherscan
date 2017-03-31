@@ -7,7 +7,7 @@ deploy:
   provider: rubygems
   api_key:
     secure: jSw3tlP736azLcV1gXGfxN25X003vtn+O9cTd88V8Lho3JwIXgsHTLsHO297qEv+X2SMnrf7Spyjg8jIkknO6V6xk+Lqj5IgquPa09chF7ISetBMlNrsYInsnoiVn/r2KYikR02PxpS2Uzi/9ba07Pz0upHg24kriDJhJ/PvsMHqfKAt/D8q+qqDojtyPLLFVGZ1ZZ1HaOyIwR5+FcJLhkwlwMG+OZDW5R+ITSSPCVYoGGHPTaTZ3Jv4Du3ZocjIJKYAkkEmN48khnLauvR/kVB5Bl5IaQsnmM1PFFbcxWhiwKqLNUlKb/jf2wFJSLx5CKyIgcvs4YMo4NyJPW88NJVUik9ZiJ7++ZRfsmL8vfbJ2j7ynFoDMvNiB1I2KDEF+pBe3kvqzQT/2PPgrSg8/KL3UEsC9t4TmkVir7ddlC1E15wHUEEIbacas/yMFieUKlHBj0QWKExPmYEApmJckSZyoCTSGuBDSG9wEbtHhHMoWsS05hByEcybBTS4P01kAqvAtfnJ6AWxZMxr19MaUyLPEEztK3PtlGUJxQM3re0I680Ir647nBJUTkTll5Gds5SRfite9cloRhfaj0LlzXhwOMeKKj+Ej9yvId2tsIf4VfEeuPYpSG3hjU3up1MD77fZB6ttaJ3mFXoJB7nBuiMhheeyNqqgyQ4PCgSplgI=
-  gem: etherscanio-rb
+  gem: etherscanio
   on:
     tags: true
     repo: sebs/etherscanio-rb
