@@ -69,4 +69,15 @@ describe Etherscanio::Call do
       it { is_expected.to eq(uri + 'module=foo&action=bar&page=1') }
     end
   end
+  describe '.txhash' do
+    subject do
+      call = Etherscanio::Call.new('foo', 'bar')
+      call.txhash = txhash
+      call.to_s
+    end
+    context 'a' do
+      let(:txhash) { 'a' }
+      it { is_expected.to eq(uri + 'module=foo&action=bar&txhash=a') }
+    end
+  end
 end

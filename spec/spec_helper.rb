@@ -36,6 +36,9 @@ account_getminedblocks_page_uri = 'http://api.etherscan.io/api?action=getminedbl
 contract_getabi_uri = 'http://api.etherscan.io/api?action=getabi&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&module=contract'
 contract_getabi_response = File.read('./spec/fixtures/contract_getabi.json')
 
+transaction_getstatus_uri = 'http://api.etherscan.io/api?action=getstatus&module=transaction&txhash=0x15f8e5ea1079d9a0bb04a4c58ae5fe7654b5b2b4463375ff7ffb490aa0032f3a'
+transaction_getstatus_response = File.read('./spec/fixtures/transaction_getstatus.json')
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
@@ -76,6 +79,11 @@ RSpec.configure do |config|
     stub_request(:get, contract_getabi_uri)
       .with(headers: general_headers)
       .to_return(status: 200, body: contract_getabi_response, headers: {})
+
+    stub_request(:get, transaction_getstatus_uri)
+      .with(headers: general_headers)
+      .to_return(status: 200, body: transaction_getstatus_response, headers: {})
+
   end
 
   config.expect_with :rspec do |c|

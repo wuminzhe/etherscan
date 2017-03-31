@@ -12,7 +12,8 @@ module Etherscanio
                   :page,
                   :offset,
                   :sort,
-                  :blocktype
+                  :blocktype,
+                  :txhash
     def initialize(mod, action)
       @base = 'http://api.etherscan.io/api?'
       @mod = mod
@@ -33,6 +34,7 @@ module Etherscanio
       uri += '&startblock=' + startblock.to_s if startblock
       uri += '&endblock=' + endblock.to_s if endblock
       uri += '&blocktype=' + blocktype if blocktype
+      uri += '&txhash=' + txhash if txhash
       uri += '&offset=' + offset.to_s if offset
       uri += '&sort=' + sort if sort
       uri += '&page=' + page.to_s if page

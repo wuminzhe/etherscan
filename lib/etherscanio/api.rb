@@ -54,5 +54,12 @@ module Etherscanio
       call.address = address
       call.fetch
     end
+
+    def transaction_getstatus(txhash)
+      call = Etherscanio::Call.new('transaction', 'getstatus')
+      call.txhash = txhash
+      call.fetch
+    end
+
   end
 end
