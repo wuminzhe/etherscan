@@ -3,6 +3,7 @@
 Access to the API of etherscan.io and the ethereum blockchain
 
 [![Build Status](https://travis-ci.org/sebs/etherscanio-rb.svg?branch=master)](https://travis-ci.org/sebs/etherscanio-rb)
+[![Gem Version](https://badge.fury.io/rb/etherscanio.svg)](https://badge.fury.io/rb/etherscanio)
 
 ## Installation
 
@@ -14,4 +15,4 @@ Dpl requires ruby with a version greater than 1.9.3
 
 ## Work in Progress
 
-Neither is is this stable, nor secure. Although all releases will be going through rubygems. 
+Neither is is this stable, nor secure. Although all releases will be going through rubygems.
