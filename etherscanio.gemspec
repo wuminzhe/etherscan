@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'etherscanio'
-  spec.version       = '0.0.4'
+  spec.version       = '0.0.5'
   spec.authors       = ['Sebastian Schürmann']
   spec.email         = ['sebs@2xs.org']
   spec.description   = '3rd party using to the ethereumblockchain API at etherscan.io'
