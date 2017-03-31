@@ -1,2 +1,3 @@
 rake yard:build
-git commit -am 'Update yard docs'
+git commit -am 'Update docs'
+rake yard:publish
