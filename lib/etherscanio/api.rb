@@ -61,5 +61,10 @@ module Etherscanio
       call.fetch
     end
 
+    def block_getblockreward(blockno)
+      call = Etherscanio::Call.new('block', 'getblockreward')
+      call.blockno = blockno
+      call.fetch
+    end
   end
 end

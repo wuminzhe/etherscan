@@ -39,6 +39,9 @@ contract_getabi_response = File.read('./spec/fixtures/contract_getabi.json')
 transaction_getstatus_uri = 'http://api.etherscan.io/api?action=getstatus&module=transaction&txhash=0x15f8e5ea1079d9a0bb04a4c58ae5fe7654b5b2b4463375ff7ffb490aa0032f3a'
 transaction_getstatus_response = File.read('./spec/fixtures/transaction_getstatus.json')
 
+block_getblockreward_uri = 'http://api.etherscan.io/api?action=getblockreward&blockno=2165403&module=block'
+block_getblockreward_response = File.read('./spec/fixtures/block_getblockreward.json')
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
@@ -84,6 +87,9 @@ RSpec.configure do |config|
       .with(headers: general_headers)
       .to_return(status: 200, body: transaction_getstatus_response, headers: {})
 
+    stub_request(:get, block_getblockreward_uri)
+      .with(headers: general_headers)
+      .to_return(status: 200, body: block_getblockreward_response, headers: {})
   end
 
   config.expect_with :rspec do |c|
