@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.4'
   spec.authors       = ['Sebastian Schürmann']
   spec.email         = ['sebs@2xs.org']
-  spec.description   = '3rd party uinding to the ethereumblockchain API at etherscan.io'
+  spec.description   = '3rd party to the ethereumblockchain API at etherscan.io'
   spec.summary       = ''
   spec.homepage      = 'https://github.com/sebs/etherscanio-rb'
   spec.license       = 'MIT'
