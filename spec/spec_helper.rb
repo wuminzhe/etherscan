@@ -33,10 +33,13 @@ account_getminedblocks_response = File.read('./spec/fixtures/account/getminedblo
 
 account_getminedblocks_page_uri = 'http://api.etherscan.io/api?action=getminedblocks&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&blocktype=block&module=account&offset=10&page=1'
 
+contract_getabi_uri = 'http://api.etherscan.io/api?action=getabi&address=0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae&module=contract'
+contract_getabi_response = File.read('./spec/fixtures/contract_getabi.json')
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'
-  
+
   config.before(:each) do
     stub_request(:get, account_balance_uri)
       .with(headers: general_headers)
@@ -69,6 +72,10 @@ RSpec.configure do |config|
     stub_request(:get, account_getminedblocks_page_uri)
       .with(headers: general_headers)
       .to_return(status: 200, body: account_getminedblocks_response, headers: {})
+
+    stub_request(:get, contract_getabi_uri)
+      .with(headers: general_headers)
+      .to_return(status: 200, body: contract_getabi_response, headers: {})
   end
 
   config.expect_with :rspec do |c|

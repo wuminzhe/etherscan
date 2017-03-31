@@ -48,5 +48,11 @@ module Etherscanio
       call.tag = tag
       call.fetch
     end
+
+    def contract_getabi(address)
+      call = Etherscanio::Call.new('contract', 'getabi')
+      call.address = address
+      call.fetch
+    end
   end
 end
