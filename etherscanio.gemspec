@@ -26,4 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'guard-rubocop'
   spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'yard'
+
+  spec.metadata["yard.run"] = "yri"
 end
