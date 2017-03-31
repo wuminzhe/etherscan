@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Etherscanio::Api do
-  describe 'account_balance' do
-    subject { Etherscanio::Api.new(apikey).getminedblocks(address, blocktype) }
+  describe 'account_getminedblocks' do
+    subject { Etherscanio::Api.new(apikey).account_getminedblocks(address, blocktype) }
 
     context 'no paging' do
       let(:apikey) { 'YourApiKeyToken' }
@@ -12,7 +12,7 @@ describe Etherscanio::Api do
     end
 
     context 'paging' do
-      subject { Etherscanio::Api.new(apikey).getminedblocks(address, blocktype, page, offset) }
+      subject { Etherscanio::Api.new(apikey).account_getminedblocks(address, blocktype, page, offset) }
       let(:apikey) { 'YourApiKeyToken' }
       let(:address) { '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae' }
       let(:page) { 1 }
