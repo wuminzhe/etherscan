@@ -26,7 +26,7 @@ module Etherscanio
 
     def initialize(chain, mod, action)
       @chain = chain.to_sym
-      @base = CHAINS[chain]
+      @base = CHAINS[chain.to_sym]
       @mod = mod
       @action = action
       @api_key = false
@@ -58,8 +58,8 @@ module Etherscanio
 
     def address_fragment
       res = ''
-      res += '&address=' + address if address && !address.is_a?(Array)
-      res += '&address=' + address.join(',') if address && address.is_a?(Array)
+      res += '&address=' + address if (address && !address.is_a?(Array))
+      res += '&address=' + address.join(',') if (address && address.is_a?(Array))
       res
     end
   end
