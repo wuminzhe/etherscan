@@ -1,5 +1,7 @@
 require 'rest-client'
 module Etherscanio
+  class ReturnError < RuntimeError; end
+
   class Call
     attr_accessor :chain,
                   :mod,
@@ -38,8 +40,10 @@ module Etherscanio
       Etherscanio.logger.debug query_url
       res = RestClient.get(query_url, {}).body
       Etherscanio.logger.debug res
-      res_object = JSON.parse(res)
-      res_object
+      data = JSON.parse(res)
+      raise ReturnError, data['error'] if data['error']
+      raise ReturnError, data['message'] if data['status'] && data['status'] != '1'
+      return data['result']
     end
 
     def to_s
