@@ -16,6 +16,7 @@ module Etherscanio
                   :blocktype,
                   :txhash,
                   :blockno
+                  :hex
 
     CHAINS = {
       mainnet: 'http://api.etherscan.io/api?',
@@ -51,6 +52,7 @@ module Etherscanio
       uri += '&sort=' + sort if sort
       uri += '&page=' + page.to_s if page
       uri += '&tag=' + tag if tag
+      uri += '&hex=' + hex if hex
       @base + uri
     end
 
