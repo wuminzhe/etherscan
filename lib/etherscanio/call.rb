@@ -34,8 +34,12 @@ module Etherscanio
     end
 
     def fetch
-      res = RestClient.get(to_s, {}).body
-      JSON.parse(res)
+      query_url = to_s
+      Etherscanio.logger.debug query_url
+      res = RestClient.get(query_url, {}).body
+      Etherscanio.logger.debug res
+      res_object = JSON.parse(res)
+      res_object
     end
 
     def to_s
