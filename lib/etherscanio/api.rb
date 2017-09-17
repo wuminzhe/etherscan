@@ -1,11 +1,12 @@
 module Etherscanio
   class Api
-    def initialize(_key)
-      nil
+    def initialize(api_key, chain)
+      @api_key = api_key
+      @chain = chain
     end
 
     def account_txlist(address, startblock, endblock, sort = 'desc', page = nil, offset = nil)
-      call = Etherscanio::Call.new('account', 'txlist')
+      call = Etherscanio::Call.new(@chain, 'account', 'txlist')
       call.address = address
       call.startblock = startblock
       call.endblock = endblock
@@ -16,7 +17,7 @@ module Etherscanio
     end
 
     def account_txlistinternal(address, startblock, endblock, sort = 'desc', page = nil, offset = nil)
-      call = Etherscanio::Call.new('account', 'txlistinternal')
+      call = Etherscanio::Call.new(@chain, 'account', 'txlistinternal')
       call.address = address
       call.startblock = startblock
       call.endblock = endblock
@@ -27,14 +28,14 @@ module Etherscanio
     end
 
     def account_balance(address, tag)
-      call = Etherscanio::Call.new('account', 'balance')
+      call = Etherscanio::Call.new(@chain, 'account', 'balance')
       call.address = address
       call.tag = tag
       call.fetch
     end
 
     def account_getminedblocks(address, blocktype, page = nil, offset = nil)
-      call = Etherscanio::Call.new('account', 'getminedblocks')
+      call = Etherscanio::Call.new(@chain, 'account', 'getminedblocks')
       call.page = page
       call.offset = offset
       call.address = address
@@ -43,26 +44,26 @@ module Etherscanio
     end
 
     def account_balancemulti(address, tag)
-      call = Etherscanio::Call.new('account', 'balancemulti')
+      call = Etherscanio::Call.new(@chain, 'account', 'balancemulti')
       call.address = address
       call.tag = tag
       call.fetch
     end
 
     def contract_getabi(address)
-      call = Etherscanio::Call.new('contract', 'getabi')
+      call = Etherscanio::Call.new(@chain, 'contract', 'getabi')
       call.address = address
       call.fetch
     end
 
     def transaction_getstatus(txhash)
-      call = Etherscanio::Call.new('transaction', 'getstatus')
+      call = Etherscanio::Call.new(@chain, 'transaction', 'getstatus')
       call.txhash = txhash
       call.fetch
     end
 
     def block_getblockreward(blockno)
-      call = Etherscanio::Call.new('block', 'getblockreward')
+      call = Etherscanio::Call.new(@chain, 'block', 'getblockreward')
       call.blockno = blockno
       call.fetch
     end

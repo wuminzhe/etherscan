@@ -1,7 +1,8 @@
 require 'rest-client'
 module Etherscanio
   class Call
-    attr_accessor :mod,
+    attr_accessor :chain,
+                  :mod,
                   :action,
                   :api_key,
                   :address,
@@ -15,8 +16,17 @@ module Etherscanio
                   :blocktype,
                   :txhash,
                   :blockno
-    def initialize(mod, action)
-      @base = 'http://api.etherscan.io/api?'
+
+    CHAINS = {
+      mainnet: 'http://api.etherscan.io/api?',
+      ropsten: 'https://ropsten.etherscan.io/api?',
+      kovan: 'https://kovan.etherscan.io/api?',
+      rinkeby: 'https://rinkeby.etherscan.io/api?'
+    }
+
+    def initialize(chain, mod, action)
+      @chain = chain.to_sym
+      @base = CHAINS[chain]
       @mod = mod
       @action = action
       @api_key = false
