@@ -15,7 +15,7 @@ module Etherscanio
                   :sort,
                   :blocktype,
                   :txhash,
-                  :blockno
+                  :blockno,
                   :hex
 
     CHAINS = {
@@ -35,8 +35,7 @@ module Etherscanio
 
     def fetch
       res = RestClient.get(to_s, {}).body
-      parsed = JSON.parse(res)
-      JSON.generate(parsed)
+      JSON.parse(res)
     end
 
     def to_s

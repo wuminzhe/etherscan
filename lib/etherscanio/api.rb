@@ -76,6 +76,13 @@ module Etherscanio
       call.fetch
     end
 
+    def eth_sendRawTransaction(hex)
+      call = Etherscanio::Call.new(@chain, 'proxy', 'eth_sendRawTransaction')
+      call.api_key = @api_key
+      call.hex = hex
+      call.fetch
+    end
+
     def eth_getTransactionCount(address, tag)
       call = Etherscanio::Call.new(@chain, 'proxy', 'eth_getTransactionCount')
       call.api_key = @api_key
@@ -84,12 +91,6 @@ module Etherscanio
       call.fetch
     end
     
-    def eth_sendRawTransaction(hex)
-      call = Etherscanio::Call.new(@chain, 'proxy', 'eth_sendRawTransaction')
-      call.api_key = @api_key
-      call.hex = hex
-      call.fetch
-    end
 
   end
 end
