@@ -29,6 +29,13 @@ module Etherscanio
       call.fetch
     end
 
+    def account_txlistinternal_txhash(txhash)
+      call = Etherscanio::Call.new(@chain, 'account', 'txlistinternal')
+      call.api_key = @api_key
+      call.txhash = txhash
+      call.fetch
+    end
+
     def account_balance(address, tag)
       call = Etherscanio::Call.new(@chain, 'account', 'balance')
       call.api_key = @api_key
@@ -90,7 +97,13 @@ module Etherscanio
       call.tag = tag
       call.fetch
     end
-    
 
+    def eth_getTransactionByHash(txhash)
+      call = Etherscanio::Call.new(@chain, 'proxy', 'eth_getTransactionByHash')
+      call.api_key = @api_key
+      call.txhash = txhash
+      call.fetch
+    end
+  
   end
 end
