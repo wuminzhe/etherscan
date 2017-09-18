@@ -47,7 +47,7 @@ module Etherscanio
     rescue => e
       Etherscanio.logger.error "Error: #{e}"
       Etherscanio.logger.error e.backtrace[0, 20].join("\n")
-      return [:error, e.message]
+      return [:error, e]
     end
 
     def to_s
