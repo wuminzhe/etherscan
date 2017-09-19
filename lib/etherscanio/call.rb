@@ -18,7 +18,8 @@ module Etherscanio
                   :blocktype,
                   :txhash,
                   :blockno,
-                  :hex
+                  :hex,
+                  :boolean
 
     CHAINS = {
       mainnet: 'http://api.etherscan.io/api?',
@@ -64,6 +65,7 @@ module Etherscanio
       uri += '&page=' + page.to_s if page
       uri += '&tag=' + tag if tag
       uri += '&hex=' + hex if hex
+      uri += '&boolean=' + boolean if boolean
       @base + uri
     end
 

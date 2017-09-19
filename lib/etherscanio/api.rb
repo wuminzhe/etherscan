@@ -89,6 +89,14 @@ module Etherscanio
       call.fetch
     end
 
+    def eth_get_block_by_number(tag, boolean)
+      call = Etherscanio::Call.new(@chain, 'proxy', 'eth_getBlockByNumber')
+      call.api_key = @api_key
+      call.tag = tag
+      call.boolean = boolean
+      call.fetch
+    end
+
     def eth_send_raw_transaction(hex)
       call = Etherscanio::Call.new(@chain, 'proxy', 'eth_sendRawTransaction')
       call.api_key = @api_key
