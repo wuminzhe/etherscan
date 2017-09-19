@@ -42,12 +42,12 @@ module Etherscanio
       Etherscanio.logger.debug res
       data = JSON.parse(res)
       return [:error, data['error']] if data['error']
-      return [:error, data['message']] if data['status'] && data['status'] != '1'
+      return [:error, data['message']] if (data['status'] && data['status'] != '1')
       return [:ok, data['result']]
     rescue => e
       Etherscanio.logger.error "Error: #{e}"
       Etherscanio.logger.error e.backtrace[0, 20].join("\n")
-      return [:error, e]
+      return [:error, e.message]
     end
 
     def to_s
