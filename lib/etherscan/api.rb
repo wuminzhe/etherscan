@@ -113,10 +113,33 @@ module Etherscan
         call.fetch
       end
 
-      def eth_send_raw_transaction(hex)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_sendRawTransaction')
+      def eth_get_transaction_by_hash(txhash)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getTransactionByHash')
         call.api_key = Etherscan.api_key
-        call.hex = hex
+        call.txhash = txhash
+        call.fetch
+      end
+
+      def eth_get_uncle_by_block_number_and_index(tag, index)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getUncleByBlockNumberAndIndex')
+        call.api_key = Etherscan.api_key
+        call.tag = tag
+        call.index = index
+        call.fetch
+      end
+
+      def eth_get_block_transaction_count_by_number(tag)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getBlockTransactionCountByNumber')
+        call.api_key = Etherscan.api_key
+        call.tag = tag
+        call.fetch
+      end
+
+      def eth_get_transaction_by_block_number_and_index(tag, index)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getTransactionByBlockNumberAndIndex')
+        call.api_key = Etherscan.api_key
+        call.tag = tag
+        call.index = index
         call.fetch
       end
 
@@ -128,8 +151,15 @@ module Etherscan
         call.fetch
       end
 
-      def eth_get_transaction_by_hash(txhash)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getTransactionByHash')
+      def eth_send_raw_transaction(hex)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_sendRawTransaction')
+        call.api_key = Etherscan.api_key
+        call.hex = hex
+        call.fetch
+      end
+
+      def eth_get_transaction_receipt(txhash)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getTransactionReceipt')
         call.api_key = Etherscan.api_key
         call.txhash = txhash
         call.fetch
@@ -141,6 +171,39 @@ module Etherscan
         call.to = to
         call.data = data
         call.tag = tag
+        call.fetch
+      end
+
+      def eth_get_code(address, tag)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getCode')
+        call.api_key = Etherscan.api_key
+        call.address = address
+        call.tag = tag
+        call.fetch
+      end
+
+      def eth_get_storage_at(address, position, tag)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getStorageAt')
+        call.api_key = Etherscan.api_key
+        call.address = address
+        call.position = position
+        call.tag = tag
+        call.fetch
+      end
+
+      def eth_gas_price
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_gasPrice')
+        call.api_key = Etherscan.api_key
+        call.fetch
+      end
+
+      def eth_estimate_gas(to, value, gas_price, gas)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_estimateGas')
+        call.api_key = Etherscan.api_key
+        call.to = to
+        call.value = value
+        call.gasPrice = gas_price
+        call.gas = gas
         call.fetch
       end
     end

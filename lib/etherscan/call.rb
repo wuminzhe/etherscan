@@ -21,7 +21,11 @@ module Etherscan
                   :hex,
                   :boolean,
                   :data,
-                  :to
+                  :to,
+                  :index,
+                  :position,
+                  :gasPrice,
+                  :gas
 
     CHAINS = {
       mainnet: 'http://api.etherscan.io/api?',
@@ -68,6 +72,12 @@ module Etherscan
       uri += '&tag=' + tag if tag
       uri += '&hex=' + hex if hex
       uri += '&boolean=' + boolean if boolean
+      uri += '&data=' + data if data
+      uri += '&to=' + to if to
+      uri += '&index=' + index if index
+      uri += '&position=' + position if position
+      uri += '&gasPrice=' + gasPrice if gasPrice
+      uri += '&gas=' + gas if gas
       @base + uri
     end
 
