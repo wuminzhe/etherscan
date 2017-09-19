@@ -66,7 +66,7 @@ module Etherscanio
 
   module Contract
     class << self
-      def contract_getabi(address)
+      def getabi(address)
         call = Etherscanio::Call.new(Etherscanio.chain, 'contract', 'getabi')
         call.api_key = Etherscanio.api_key
         call.address = address
@@ -77,7 +77,7 @@ module Etherscanio
 
   module Transaction
     class << self
-      def transaction_getstatus(txhash)
+      def getstatus(txhash)
         call = Etherscanio::Call.new(Etherscanio.chain, 'transaction', 'getstatus')
         call.api_key = Etherscanio.api_key
         call.txhash = txhash
@@ -88,7 +88,7 @@ module Etherscanio
 
   module Block
     class << self
-      def block_getblockreward(blockno)
+      def getblockreward(blockno)
         call = Etherscanio::Call.new(Etherscanio.chain, 'block', 'getblockreward')
         call.api_key = Etherscanio.api_key
         call.blockno = blockno
