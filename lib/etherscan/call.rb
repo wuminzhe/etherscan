@@ -1,5 +1,5 @@
 require 'rest-client'
-module Etherscanio
+module Etherscan
   class ReturnError < RuntimeError; end
 
   class Call
@@ -38,16 +38,16 @@ module Etherscanio
 
     def fetch
       query_url = to_s
-      Etherscanio.logger.debug query_url
+      Etherscan.logger.debug query_url
       res = RestClient.get(query_url, {}).body
-      Etherscanio.logger.debug res
+      Etherscan.logger.debug res
       data = JSON.parse(res)
       return [:error, data['error']] if data['error']
       return [:error, data['message']] if (data['status'] && data['status'] != '1')
       return [:ok, data['result']]
     rescue => e
-      Etherscanio.logger.error "Error: #{e}"
-      Etherscanio.logger.error e.backtrace[0, 20].join("\n")
+      Etherscan.logger.error "Error: #{e}"
+      Etherscan.logger.error e.backtrace[0, 20].join("\n")
       return [:error, e.message]
     end
 

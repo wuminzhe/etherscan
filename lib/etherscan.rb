@@ -3,7 +3,7 @@ require 'logger'
 require 'etherscanio/call'
 require 'etherscanio/api'
 
-module Etherscanio
+module Etherscan
   class << self
     attr_accessor :logger
   end

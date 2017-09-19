@@ -1,6 +1,8 @@
-# etherscanio
+# etherscan
 
 Access to the API of etherscan.io and the ethereum blockchain
+
+Forked from: https://github.com/sebs/etherscanio-rb
 
 ## Installation
 
