@@ -19,7 +19,9 @@ module Etherscan
                   :txhash,
                   :blockno,
                   :hex,
-                  :boolean
+                  :boolean,
+                  :data,
+                  :to
 
     CHAINS = {
       mainnet: 'http://api.etherscan.io/api?',

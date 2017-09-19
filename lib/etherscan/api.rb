@@ -134,6 +134,15 @@ module Etherscan
         call.txhash = txhash
         call.fetch
       end
+
+      def eth_call(to, data, tag)
+        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_call')
+        call.api_key = Etherscan.api_key
+        call.to = to
+        call.data = data
+        call.tag = tag
+        call.fetch
+      end
     end
   end
 end
