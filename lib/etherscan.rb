@@ -1,7 +1,7 @@
 require 'rest-client'
 require 'logger'
-require 'etherscanio/call'
-require 'etherscanio/api'
+require 'etherscan/call'
+require 'etherscan/api'
 
 module Etherscan
   class << self
