@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.6'
   spec.authors       = ['wuminzhe']
   spec.email         = ['wuminzhe@gmail.com']
-  spec.description   = '%q{Forked from: https://github.com/sebs/etherscanio-rb. 3rd party using to the API at etherscan.io}'
+  spec.description   = 'Forked from: https://github.com/sebs/etherscanio-rb. 3rd party using to the API at etherscan.io'
   spec.summary       = '3rd party using to the API at etherscan.io'
   spec.homepage      = 'https://github.com/wuminzhe/etherscanio-rb'
   spec.license       = 'MIT'
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.extra_rdoc_files = ['README', 'Readme.md']
+  spec.extra_rdoc_files = ['README.md']
 
   spec.add_dependency 'rest-client'
   spec.add_development_dependency 'bundler'

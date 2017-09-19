@@ -6,10 +6,10 @@ Forked from: https://github.com/sebs/etherscanio-rb
 
 ## Installation
 
-etherscanio is published to rubygems.
+etherscan is published to rubygems.
 
 Dpl requires ruby with a version greater than 1.9.3
-  * To install: gem install etherscanio
+  * To install: gem install etherscan
 
 
 ## Work in Progress
