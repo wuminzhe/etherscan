@@ -83,27 +83,37 @@ module Etherscanio
       call.fetch
     end
 
-    def eth_sendRawTransaction(hex)
-      call = Etherscanio::Call.new(@chain, 'proxy', 'eth_sendRawTransaction')
-      call.api_key = @api_key
-      call.hex = hex
-      call.fetch
+    module Proxy
+      def eth_block_number
+        call = Etherscanio::Call.new(@chain, 'proxy', 'eth_blockNumber')
+        call.api_key = @api_key
+        call.fetch
+      end
+
+      def eth_send_raw_transaction(hex)
+        call = Etherscanio::Call.new(@chain, 'proxy', 'eth_sendRawTransaction')
+        call.api_key = @api_key
+        call.hex = hex
+        call.fetch
+      end
+  
+      def eth_get_transaction_count(address, tag)
+        call = Etherscanio::Call.new(@chain, 'proxy', 'eth_getTransactionCount')
+        call.api_key = @api_key
+        call.address = address
+        call.tag = tag
+        call.fetch
+      end
+  
+      def eth_get_transaction_by_hash(txhash)
+        call = Etherscanio::Call.new(@chain, 'proxy', 'eth_getTransactionByHash')
+        call.api_key = @api_key
+        call.txhash = txhash
+        call.fetch
+      end
     end
 
-    def eth_getTransactionCount(address, tag)
-      call = Etherscanio::Call.new(@chain, 'proxy', 'eth_getTransactionCount')
-      call.api_key = @api_key
-      call.address = address
-      call.tag = tag
-      call.fetch
-    end
-
-    def eth_getTransactionByHash(txhash)
-      call = Etherscanio::Call.new(@chain, 'proxy', 'eth_getTransactionByHash')
-      call.api_key = @api_key
-      call.txhash = txhash
-      call.fetch
-    end
+    
   
   end
 end
