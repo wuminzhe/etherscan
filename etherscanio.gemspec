@@ -6,11 +6,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = 'etherscanio'
   spec.version       = '0.0.6'
-  spec.authors       = ['Sebastian Schürmann']
-  spec.email         = ['sebs@2xs.org']
-  spec.description   = '3rd party using to the ethereumblockchain API at etherscan.io'
-  spec.summary       = ''
-  spec.homepage      = 'https://github.com/sebs/etherscanio-rb'
+  spec.authors       = ['wuminzhe']
+  spec.email         = ['wuminzhe@gmail.com']
+  spec.description   = '%q{Forked from: https://github.com/sebs/etherscanio-rb. 3rd party using to the API at etherscan.io}'
+  spec.summary       = '3rd party using to the API at etherscan.io'
+  spec.homepage      = 'https://github.com/wuminzhe/etherscanio-rb'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
