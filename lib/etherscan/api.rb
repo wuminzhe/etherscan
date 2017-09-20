@@ -97,6 +97,20 @@ module Etherscan
     end
   end
 
+  module Logs
+    class << self
+      def get_logs(fromBlock, toBlock, address, topics)
+        call = Etherscan::Call.new(Etherscan.chain, 'logs', 'getLogs')
+        call.api_key = Etherscan.api_key
+        call.fromBlock = fromBlock
+        call.toBlock = toBlock
+        call.address = address
+        call.topics = topics
+        call.fetch
+      end
+    end
+  end
+
   module Proxy
     class << self
       def eth_block_number

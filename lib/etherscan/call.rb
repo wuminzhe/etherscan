@@ -25,7 +25,11 @@ module Etherscan
                   :index,
                   :position,
                   :gasPrice,
-                  :gas
+                  :gas,
+                  :fromBlock,
+                  :toBlock,
+                  :address,
+                  :topics
 
     CHAINS = {
       mainnet: 'http://api.etherscan.io/api?',
@@ -77,7 +81,13 @@ module Etherscan
       uri += '&index=' + index if index
       uri += '&position=' + position if position
       uri += '&gasPrice=' + gasPrice if gasPrice
-      uri += '&gas=' + gas if gas
+      uri += '&fromBlock=' + fromBlock if fromBlock
+      uri += '&toBlock=' + toBlock if toBlock
+      if topics
+        topics.each do |topic|
+          uri += "&#{topic['name']}=" + topic['value']
+        end
+      end
       @base + uri
     end
 
