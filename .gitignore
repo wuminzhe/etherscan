@@ -8,6 +8,6 @@
 /tmp/
 
 # rspec failure tracking
-.rspec_status
-.idea
-etherscan-*.*.*.gem
+/.rspec_status
+/.idea
+/etherscan-*.*.*.gem

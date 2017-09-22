@@ -1,4 +1,5 @@
-require 'rest-client'
+require 'json'
+require 'faraday'
 require 'logger'
 require 'etherscan/call'
 require 'etherscan/api'

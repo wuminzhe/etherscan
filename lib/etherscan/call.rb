@@ -1,4 +1,3 @@
-require 'rest-client'
 module Etherscan
   class ReturnError < RuntimeError; end
 
@@ -49,7 +48,7 @@ module Etherscan
     def fetch
       query_url = to_s
       Etherscan.logger.debug query_url
-      res = RestClient.get(query_url, {}).body
+      res = Faraday.get(query_url).body
       Etherscan.logger.debug res
       data = JSON.parse(res)
       return [:error, data['error']] if data['error']
