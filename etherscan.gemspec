@@ -5,12 +5,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'etherscan'
-  spec.version       = '0.1.3'
+  spec.version       = '0.1.4'
   spec.authors       = ['wuminzhe']
   spec.email         = ['wuminzhe@gmail.com']
   spec.description   = 'Forked from: https://github.com/sebs/etherscanio-rb. 3rd party using to the API at etherscan.io'
   spec.summary       = '3rd party using to the API at etherscan.io'
-  spec.homepage      = 'https://github.com/wuminzhe/etherscanio-rb'
+  spec.homepage      = 'https://github.com/wuminzhe/etherscan'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
@@ -30,6 +30,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'guard-rubocop'
   spec.add_development_dependency 'webmock'
-  spec.add_development_dependency 'yard'
-  spec.add_development_dependency 'yard-ghpages'
 end
