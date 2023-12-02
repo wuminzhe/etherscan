@@ -1,225 +1,186 @@
 module Etherscan
-  class << self
-    attr_accessor :api_key, :chain
-  end
-
-  module Account
-    class << self
-      def txlist(address, startblock, endblock, sort = 'desc', page = nil, offset = nil)
-        call = Etherscan::Call.new(Etherscan.chain, 'account', 'txlist')
-        call.api_key = Etherscan.api_key
-        call.address = address
-        call.startblock = startblock
-        call.endblock = endblock
-        call.page = page
-        call.offset = offset
-        call.sort = sort
-        call.fetch
-      end
-  
-      def txlistinternal(address, startblock, endblock, sort = 'desc', page = nil, offset = nil)
-        call = Etherscan::Call.new(Etherscan.chain, 'account', 'txlistinternal')
-        call.api_key = Etherscan.api_key
-        call.address = address
-        call.startblock = startblock
-        call.endblock = endblock
-        call.page = page
-        call.offset = offset
-        call.sort = sort
-        call.fetch
-      end
-  
-      def txlistinternal_txhash(txhash)
-        call = Etherscan::Call.new(Etherscan.chain, 'account', 'txlistinternal')
-        call.api_key = Etherscan.api_key
-        call.txhash = txhash
-        call.fetch
-      end
-  
-      def balance(address, tag)
-        call = Etherscan::Call.new(Etherscan.chain, 'account', 'balance')
-        call.api_key = Etherscan.api_key
-        call.address = address
-        call.tag = tag
-        call.fetch
-      end
-  
-      def getminedblocks(address, blocktype, page = nil, offset = nil)
-        call = Etherscan::Call.new(Etherscan.chain, 'account', 'getminedblocks')
-        call.api_key = Etherscan.api_key
-        call.page = page
-        call.offset = offset
-        call.address = address
-        call.blocktype = blocktype
-        call.fetch
-      end
-  
-      def balancemulti(address, tag)
-        call = Etherscan::Call.new(Etherscan.chain, 'account', 'balancemulti')
-        call.api_key = Etherscan.api_key
-        call.address = address
-        call.tag = tag
-        call.fetch
-      end
+  class Api
+    def initialize(url, api_key = nil)
+      @url = url
+      @api_key = api_key
     end
-  end
 
-  module Contract
-    class << self
-      def getabi(address)
-        call = Etherscan::Call.new(Etherscan.chain, 'contract', 'getabi')
-        call.api_key = Etherscan.api_key
-        call.address = address
-        call.fetch
-      end
+    def request(module_name, action, params = {})
+      params = params.reject { |_k, v| v.nil? } # filter out nil values
+      params_query = params.keys.map { |key| "#{key}=#{params[key]}" }.join('&').strip
+      params_query = if params_query.empty?
+                       ''
+                     else
+                       "&#{params_query}"
+                     end
+
+      api_key_query = @api_key.nil? ? '' : "&apikey=#{@api_key}"
+
+      uri = URI "#{@url}?module=#{module_name}&action=#{action}#{params_query}#{api_key_query}"
+      Etherscan.logger.debug "Req: #{uri}"
+      resp = Net::HTTP.get(uri)
+      Etherscan.logger.debug "Rsp: #{resp}"
+      resp = JSON.parse(resp)
+
+      raise resp['result'] if resp['status'] == '0'
+
+      resp['result']
     end
-  end
 
-  module Transaction
-    class << self
-      def getstatus(txhash)
-        call = Etherscan::Call.new(Etherscan.chain, 'transaction', 'getstatus')
-        call.api_key = Etherscan.api_key
-        call.txhash = txhash
-        call.fetch
-      end
+    def respond_to_missing?(*_args)
+      true
     end
-  end
 
-  module Block
-    class << self
-      def getblockreward(blockno)
-        call = Etherscan::Call.new(Etherscan.chain, 'block', 'getblockreward')
-        call.api_key = Etherscan.api_key
-        call.blockno = blockno
-        call.fetch
-      end
+    def method_missing(method, *args)
+      module_name, action = method.to_s.split('_')
+      request(module_name, action, args[0])
     end
-  end
 
-  module Logs
-    class << self
-      def get_logs(fromBlock, toBlock, address, topics)
-        call = Etherscan::Call.new(Etherscan.chain, 'logs', 'getLogs')
-        call.api_key = Etherscan.api_key
-        call.fromBlock = fromBlock
-        call.toBlock = toBlock
-        call.address = address
-        call.topics = topics
-        call.fetch
-      end
+    #########################################
+    # Accounts
+    #########################################
+    def account_balance(address:, tag: 'latest')
+      request('account', 'balance', address: address, tag: tag)
     end
-  end
 
-  module Proxy
-    class << self
-      def eth_block_number
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_blockNumber')
-        call.api_key = Etherscan.api_key
-        call.fetch
-      end
+    def account_balancemulti(addresses:, tag: 'latest')
+      request('account', 'balancemulti', address: addresses.join(','), tag: tag)
+    end
 
-      def eth_get_block_by_number(tag, boolean)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getBlockByNumber')
-        call.api_key = Etherscan.api_key
-        call.tag = tag
-        call.boolean = boolean
-        call.fetch
-      end
+    def account_txlist(address:, startblock: 0, endblock: 999_999_999, sort: 'asc', page: 1, offset: 1000)
+      request('account', 'txlist', address: address,
+                                   startblock: startblock,
+                                   endblock: endblock,
+                                   sort: sort,
+                                   page: page,
+                                   offset: offset)
+    end
 
-      def eth_get_transaction_by_hash(txhash)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getTransactionByHash')
-        call.api_key = Etherscan.api_key
-        call.txhash = txhash
-        call.fetch
-      end
+    def account_txlistinternal(address: nil,
+                               startblock: 0, endblock: 999_999_999, sort: 'asc', page: 1, offset: 1000)
+      params = {
+        address: address,
+        startblock: startblock, endblock: endblock, sort: sort, page: page, offset: offset
+      }
+      request('account', 'txlistinternal', params)
+    end
 
-      def eth_get_uncle_by_block_number_and_index(tag, index)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getUncleByBlockNumberAndIndex')
-        call.api_key = Etherscan.api_key
-        call.tag = tag
-        call.index = index
-        call.fetch
-      end
+    def account_txlistinternal_by_txhash(txhash:)
+      # https://docs.etherscan.io/api-endpoints/accounts#get-internal-transactions-by-transaction-hash
+      request('account', 'txlistinternal', txhash: txhash)
+    end
 
-      def eth_get_block_transaction_count_by_number(tag)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getBlockTransactionCountByNumber')
-        call.api_key = Etherscan.api_key
-        call.tag = tag
-        call.fetch
-      end
+    def account_tokentx(address:, contractaddress:,
+                        startblock: 0, endblock: 999_999_999, sort: 'asc', page: 1, offset: 1000)
+      params = {
+        address: address, contractaddress: contractaddress,
+        startblock: startblock, endblock: endblock, sort: sort, page: page, offset: offset
+      }
+      request('account', 'tokentx', params)
+    end
 
-      def eth_get_transaction_by_block_number_and_index(tag, index)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getTransactionByBlockNumberAndIndex')
-        call.api_key = Etherscan.api_key
-        call.tag = tag
-        call.index = index
-        call.fetch
-      end
+    def account_tokennfttx(address:, contractaddress:,
+                           startblock: 0, endblock: 999_999_999, sort: 'asc', page: 1, offset: 1000)
+      params = {
+        address: address, contractaddress: contractaddress,
+        startblock: startblock, endblock: endblock, sort: sort, page: page, offset: offset
+      }
+      request('account', 'tokennfttx', params)
+    end
 
-      def eth_get_transaction_count(address, tag)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getTransactionCount')
-        call.api_key = Etherscan.api_key
-        call.address = address
-        call.tag = tag
-        call.fetch
-      end
+    #########################################
+    # Contracts
+    #########################################
+    def contract_getabi(address:)
+      request('contract', 'getabi', address: address)
+    end
 
-      def eth_send_raw_transaction(hex)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_sendRawTransaction')
-        call.api_key = Etherscan.api_key
-        call.hex = hex
-        call.fetch
-      end
+    def contract_getsourcecode(address:)
+      request('contract', 'getsourcecode', address: address)
+    end
 
-      def eth_get_transaction_receipt(txhash)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getTransactionReceipt')
-        call.api_key = Etherscan.api_key
-        call.txhash = txhash
-        call.fetch
-      end
+    #########################################
+    # Transactions
+    #########################################
+    def transaction_getstatus(txhash:)
+      request('transaction', 'getstatus', txhash: txhash)
+    end
 
-      def eth_call(to, data, tag)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_call')
-        call.api_key = Etherscan.api_key
-        call.to = to
-        call.data = data
-        call.tag = tag
-        call.fetch
-      end
+    def transaction_gettxreceiptstatus(txhash:)
+      request('transaction', 'gettxreceiptstatus', txhash: txhash)
+    end
 
-      def eth_get_code(address, tag)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getCode')
-        call.api_key = Etherscan.api_key
-        call.address = address
-        call.tag = tag
-        call.fetch
-      end
+    #########################################
+    # Blocks
+    #########################################
+    def block_getblockreward(blockno:)
+      request('block', 'getblockreward', blockno: blockno)
+    end
 
-      def eth_get_storage_at(address, position, tag)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_getStorageAt')
-        call.api_key = Etherscan.api_key
-        call.address = address
-        call.position = position
-        call.tag = tag
-        call.fetch
-      end
+    def block_getblockcount(blockno:)
+      request('block', 'getblockcount', blockno: blockno)
+    end
 
-      def eth_gas_price
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_gasPrice')
-        call.api_key = Etherscan.api_key
-        call.fetch
-      end
+    def block_getblocknobytime(timestamp:, closest: 'before')
+      request('block', 'getblocknobytime', timestamp: timestamp, closest: closest)
+    end
 
-      def eth_estimate_gas(to, value, gas_price, gas)
-        call = Etherscan::Call.new(Etherscan.chain, 'proxy', 'eth_estimateGas')
-        call.api_key = Etherscan.api_key
-        call.to = to
-        call.value = value
-        call.gasPrice = gas_price
-        call.gas = gas
-        call.fetch
-      end
+    #########################################
+    # Logs
+    #########################################
+    # fromBlock, toBlock, address
+    # topic0, topic1, topic2, topic3 (32 Bytes per topic)
+    # topic0_1_opr (and|or between topic0 & topic1),
+    # topic1_2_opr (and|or between topic1 & topic2),
+    # topic2_3_opr (and|or between topic2 & topic3),
+    # topic0_2_opr (and|or between topic0 & topic2),
+    # topic0_3_opr (and|or between topic0 & topic3),
+    # topic1_3_opr (and|or between topic1 & topic3)
+    def logs_getLogs(from_block: 0, to_block: 'latest', address: nil,
+                     topic0: nil, topic1: nil, topic2: nil, topic3: nil,
+                     topic0_1_opr: nil, topic1_2_opr: nil, topic2_3_opr: nil,
+                     topic0_2_opr: nil, topic0_3_opr: nil, topic1_3_opr: nil)
+      params = {
+        fromBlock: from_block, toBlock: to_block, address: address,
+        topic0: topic0, topic1: topic1, topic2: topic2, topic3: topic3,
+        topic0_1_opr: topic0_1_opr, topic1_2_opr: topic1_2_opr, topic2_3_opr: topic2_3_opr,
+        topic0_2_opr: topic0_2_opr, topic0_3_opr: topic0_3_opr, topic1_3_opr: topic1_3_opr
+      }
+
+      request('logs', 'getLogs', params)
+    end
+
+    #########################################
+    # Tokens
+    #########################################
+    def stats_tokensupply(contractaddress:)
+      request('stats', 'tokensupply', contractaddress: contractaddress)
+    end
+
+    def account_tokenbalance(contractaddress:, address:, tag: 'latest')
+      request('account', 'tokenbalance', contractaddress: contractaddress, address: address, tag: tag)
+    end
+
+    #########################################
+    # Stats
+    #########################################
+    def stats_ethsupply
+      request('stats', 'ethsupply')
+    end
+
+    def stats_ethprice
+      request('stats', 'ethprice')
+    end
+
+    #########################################
+    # Derived APIs
+    #########################################
+    def derived_extract_contract_abi(address)
+      result = contract_getsourcecode({ address: address })[0]
+
+      abi = JSON.parse result['ABI']
+      name = result['ContractName']
+      { contract_name: name, abi: abi }
     end
   end
 end

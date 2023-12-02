@@ -1,17 +1,15 @@
 # etherscan
 
-Access to the API of etherscan.io and the ethereum blockchain
+Access to the API of etherscan.io and the compatible APIs.
 
-Forked from: https://github.com/sebs/etherscanio-rb
 
 ## Installation
 
-etherscan is published to rubygems.
+```bash
+gem 'etherscan', '~> 0.2.0'
+```
 
-Dpl requires ruby with a version greater than 1.9.3
-  * To install: gem install etherscan
+```bash
+gem install etherscan
+```
 
-
-## Work in Progress
-
-Neither is is this stable, nor secure. Although all releases will be going through rubygems.
