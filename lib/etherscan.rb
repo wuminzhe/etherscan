@@ -3,6 +3,9 @@ require 'logger'
 require 'net/http'
 require 'etherscan/api'
 
+require 'active_support'
+require 'active_support/core_ext/string'
+
 module Etherscan
   # https://chainid.network/chains.json
   # key is the underscore(short name) of the chain in chains.json
@@ -48,6 +51,7 @@ module Etherscan
 
     def api(chain_short_name, api_key = nil)
       url = CHAINS[chain_short_name]
+      url = CHAINS[chain_short_name.underscore] if url.nil?
       raise "Chain `#{chain_short_name}` is not supported. Only #{CHAINS.keys} are supported." if url.nil?
 
       Etherscan::Api.new(url, api_key)

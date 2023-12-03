@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'etherscan'
-  spec.version       = '0.2.0'
+  spec.version       = '0.2.1'
   spec.authors       = ['Aki Wu']
   spec.email         = ['wuminzhe@gmail.com']
   spec.description   = 'etherscan.io API wrapper, or, etherscan compatible API wrapper'
@@ -12,4 +12,6 @@ Gem::Specification.new do |spec|
   spec.bindir = 'exe'
 
   spec.require_paths = ['lib']
+
+  spec.add_dependency 'activesupport'
 end
