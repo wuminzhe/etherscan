@@ -44,7 +44,13 @@ module Etherscan
     end
 
     def account_balancemulti(addresses:, tag: 'latest')
-      request('account', 'balancemulti', address: addresses.join(','), tag: tag)
+      if addresses.is_a? Array
+        request('account', 'balancemulti', address: addresses.join(','), tag: tag)
+      elsif addresses.is_a? String
+        request('account', 'balancemulti', address: addresses, tag: tag)
+      else
+        raise 'addresses must be an array or a string'
+      end
     end
 
     def account_txlist(address:, startblock: 0, endblock: 999_999_999, sort: 'asc', page: 1, offset: 1000)
@@ -97,6 +103,16 @@ module Etherscan
 
     def contract_getsourcecode(address:)
       request('contract', 'getsourcecode', address: address)
+    end
+
+    def contract_getcontractcreation(contractaddresses:)
+      if contractaddresses.is_a? Array
+        request('contract', 'getcontractcreation', contractaddresses: contractaddresses.join(','))
+      elsif contractaddresses.is_a? String
+        request('contract', 'getcontractcreation', contractaddresses: contractaddresses)
+      else
+        raise 'contractaddresses must be an array or a string'
+      end
     end
 
     #########################################
@@ -170,17 +186,6 @@ module Etherscan
 
     def stats_ethprice
       request('stats', 'ethprice')
-    end
-
-    #########################################
-    # Derived APIs
-    #########################################
-    def derived_extract_contract_abi(address)
-      result = contract_getsourcecode({ address: address })[0]
-
-      abi = JSON.parse result['ABI']
-      name = result['ContractName']
-      { contract_name: name, abi: abi }
     end
   end
 end
