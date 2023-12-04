@@ -2,6 +2,7 @@ require 'json'
 require 'logger'
 require 'net/http'
 require 'etherscan/api'
+require 'tronscan/api'
 
 require 'active_support'
 require 'active_support/core_ext/string'
@@ -46,15 +47,25 @@ module Etherscan
     'obnb' => 'https://api-opbnb.bscscan.com/api'
   }
 
+  # https://tronscan.org/#/developer/api
+  TRON_CHAINS = {
+    'tron' => 'https://apilist.tronscanapi.com/api',
+  }
+
   class << self
     attr_accessor :logger
 
     def api(chain_short_name, api_key = nil)
       url = CHAINS[chain_short_name]
       url = CHAINS[chain_short_name.underscore] if url.nil?
-      raise "Chain `#{chain_short_name}` is not supported. Only #{CHAINS.keys} are supported." if url.nil?
 
-      Etherscan::Api.new(url, api_key)
+      tron_url = TRON_CHAINS[chain_short_name]
+      tron_url = TRON_CHAINS[chain_short_name.underscore] if url.nil?
+
+      raise "Chain `#{chain_short_name}` is not supported. Only Etherscan [#{CHAINS.keys}] & Tronscan [#{TRON_CHAINS.keys}] are supported." if url.nil? && tron_url.nil?
+
+      return Etherscan::Api.new(url, api_key) if url
+      return Tronscan::Api.new(tron_url, api_key) if tron_url
     end
 
     # for example: Etherscan.eth('your_api_key')
