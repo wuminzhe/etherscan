@@ -3,6 +3,7 @@ require 'logger'
 require 'net/http'
 require 'etherscan/api'
 require 'tronscan/api'
+require 'subscan/api'
 
 require 'active_support'
 require 'active_support/core_ext/string'
@@ -52,6 +53,12 @@ module Etherscan
     'tron' => 'https://apilist.tronscanapi.com/api',
   }
 
+  SUBSCAN_CHAINS = {
+    'pangolin' => 'https://pangolin.api.subscan.io/api',
+    'crab' => 'https://crab.api.subscan.io/api',
+    'darwinia' => 'https://darwinia.api.subscan.io/api',
+  }
+
   class << self
     attr_accessor :logger
 
@@ -62,10 +69,17 @@ module Etherscan
       tron_url = TRON_CHAINS[chain_short_name]
       tron_url = TRON_CHAINS[chain_short_name.underscore] if url.nil?
 
-      raise "Chain `#{chain_short_name}` is not supported. Only Etherscan [#{CHAINS.keys}] & Tronscan [#{TRON_CHAINS.keys}] are supported." if url.nil? && tron_url.nil?
+      subscan_url = SUBSCAN_CHAINS[chain_short_name]
+      subscan_url = SUBSCAN_CHAINS[chain_short_name.underscore] if url.nil?
+
+      raise "Chain `#{chain_short_name}` is not supported. Only " \
+            "Etherscan [#{CHAINS.keys}] & " \
+            "Subscan [#{SUBSCAN_CHAINS.keys}] & " \
+            "Tronscan [#{TRON_CHAINS.keys}] are supported." if url.nil? && tron_url.nil? && subscan_url.nil?
 
       return Etherscan::Api.new(url, api_key) if url
       return Tronscan::Api.new(tron_url, api_key) if tron_url
+      return Subscan::Api.new(subscan_url, api_key) if subscan_url
     end
 
     # for example: Etherscan.eth('your_api_key')
