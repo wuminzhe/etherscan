@@ -33,7 +33,7 @@ module Etherscan
 
     def method_missing(method, *args)
       module_name, action = method.to_s.split('_')
-      request(module_name, action, args[0])
+      request(module_name, action, args[0] || {})
     end
 
     #########################################
