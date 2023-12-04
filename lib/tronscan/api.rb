@@ -21,13 +21,11 @@ module Tronscan
       request = Net::HTTP::Get.new(uri.request_uri)
       request['TRON-PRO-API-KEY'] = @api_key unless @api_key.nil?
 
-      resp = http.request(request).body
+      response = http.request(request)
       # Etherscan.logger.debug "Rsp: #{resp}"
-      resp = JSON.parse(resp)
+      raise response.body if response.code != '200'
 
-      # raise resp['result'] if resp['status'] == '0'
-
-      resp
+      JSON.parse(response.body)
     rescue StandardError => e
       puts e.message
       puts e.backtrace.inspect
