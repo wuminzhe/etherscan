@@ -73,9 +73,9 @@ module Etherscan
       subscan_url = SUBSCAN_CHAINS[chain_short_name.underscore] if url.nil?
 
       raise "Chain `#{chain_short_name}` is not supported. Only " \
-            "Etherscan [#{CHAINS.keys}] & " \
-            "Subscan [#{SUBSCAN_CHAINS.keys}] & " \
-            "Tronscan [#{TRON_CHAINS.keys}] are supported." if url.nil? && tron_url.nil? && subscan_url.nil?
+            "ETHERSCAN #{CHAINS.keys} & " \
+            "SUBSCAN #{SUBSCAN_CHAINS.keys} & " \
+            "TRONSCAN #{TRON_CHAINS.keys} are supported." if url.nil? && tron_url.nil? && subscan_url.nil?
 
       return Etherscan::Api.new(url, api_key) if url
       return Tronscan::Api.new(tron_url, api_key) if tron_url
