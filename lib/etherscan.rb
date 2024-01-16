@@ -40,7 +40,13 @@ module Etherscan
     1111 => 'wemix',
     534_352 => 'scr',
     534_351 => 'scr_sepolia',
-    204 => 'obnb'
+    204 => 'obnb',
+
+    728_126_428 => 'tron',
+    2_494_104_990 => 'tron_shasta',
+    43 => 'pangolin',
+    44 => 'crab',
+    46 => 'darwinia'
   }
 
   # https://chainid.network/chains.json
@@ -84,7 +90,8 @@ module Etherscan
 
   # https://tronscan.org/#/developer/api
   TRON_CHAINS = {
-    'tron' => 'https://apilist.tronscanapi.com/api'
+    'tron' => 'https://apilist.tronscanapi.com/api',
+    'tron_shasta' => 'https://shastapi.tronscan.org/api'
   }
 
   SUBSCAN_CHAINS = {
