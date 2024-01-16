@@ -9,6 +9,40 @@ require 'active_support'
 require 'active_support/core_ext/string'
 
 module Etherscan
+  CHAIN_SHORT_NAME_BY_ID = {
+    1 => 'eth',
+    5 => 'gor',
+    11_155_111 => 'sep',
+    42_161 => 'arb1',
+    421_613 => 'arb_goerli',
+    421_614 => 'arb_sep',
+    56 => 'bnb',
+    97 => 'bnbt',
+    137 => 'matic',
+    80_001 => 'maticmum',
+    1101 => 'zkevm',
+    14_422 => 'testnet_zk_evm_mango',
+    250 => 'ftm',
+    4002 => 'tftm',
+    10 => 'oeth',
+    1284 => 'mbeam',
+    1285 => 'mriver',
+    1287 => 'mbase',
+    25 => 'cronos',
+    199 => 'btt',
+    1028 => 'tbtt',
+    100 => 'gnosis',
+    42_170 => 'arb_nova',
+    59_144 => 'linea',
+    59_140 => 'linea_testnet',
+    8453 => 'base',
+    84_531 => 'basegor',
+    1111 => 'wemix',
+    534_352 => 'scr',
+    534_351 => 'scr_sepolia',
+    204 => 'obnb'
+  }
+
   # https://chainid.network/chains.json
   # key is the underscore(short name) of the chain in chains.json
   # https://blockscan.com/
@@ -50,19 +84,26 @@ module Etherscan
 
   # https://tronscan.org/#/developer/api
   TRON_CHAINS = {
-    'tron' => 'https://apilist.tronscanapi.com/api',
+    'tron' => 'https://apilist.tronscanapi.com/api'
   }
 
   SUBSCAN_CHAINS = {
     'pangolin' => 'https://pangolin.api.subscan.io/api',
     'crab' => 'https://crab.api.subscan.io/api',
-    'darwinia' => 'https://darwinia.api.subscan.io/api',
+    'darwinia' => 'https://darwinia.api.subscan.io/api'
   }
 
   class << self
     attr_accessor :logger
 
-    def api(chain_short_name, api_key = nil)
+    def api(chain_id_or_short_name, api_key = nil)
+      if chain_id_or_short_name.is_a?(Integer)
+        chain_short_name = CHAIN_SHORT_NAME_BY_ID[chain_id_or_short_name]
+        raise "Chain id `#{chain_id_or_short_name}` is not supported." if chain_short_name.nil?
+      else
+        chain_short_name = chain_id_or_short_name
+      end
+
       url = CHAINS[chain_short_name]
       url = CHAINS[chain_short_name.underscore] if url.nil?
 
@@ -72,14 +113,17 @@ module Etherscan
       subscan_url = SUBSCAN_CHAINS[chain_short_name]
       subscan_url = SUBSCAN_CHAINS[chain_short_name.underscore] if url.nil?
 
-      raise "Chain `#{chain_short_name}` is not supported. Only " \
-            "ETHERSCAN #{CHAINS.keys} & " \
-            "SUBSCAN #{SUBSCAN_CHAINS.keys} & " \
-            "TRONSCAN #{TRON_CHAINS.keys} are supported." if url.nil? && tron_url.nil? && subscan_url.nil?
+      if url.nil? && tron_url.nil? && subscan_url.nil?
+        raise "Chain `#{chain_short_name}` is not supported. Only " \
+              "ETHERSCAN #{CHAINS.keys} & " \
+              "SUBSCAN #{SUBSCAN_CHAINS.keys} & " \
+              "TRONSCAN #{TRON_CHAINS.keys} are supported."
+      end
 
       return Etherscan::Api.new(url, api_key) if url
       return Tronscan::Api.new(tron_url, api_key) if tron_url
-      return Subscan::Api.new(subscan_url, api_key) if subscan_url
+
+      Subscan::Api.new(subscan_url, api_key) if subscan_url
     end
 
     # for example: Etherscan.eth('your_api_key')
