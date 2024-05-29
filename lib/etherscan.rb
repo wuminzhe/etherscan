@@ -42,7 +42,7 @@ module Etherscan
     534_351 => 'scr_sepolia',
     204 => 'obnb',
     81457 => 'blastmainnet',
-    167009 => 'tko-hekla',
+    167009 => 'tko_hekla',
 
     728_126_428 => 'tron',
     2_494_104_990 => 'tron_shasta',
