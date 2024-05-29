@@ -42,12 +42,14 @@ module Etherscan
     534_351 => 'scr_sepolia',
     204 => 'obnb',
     81457 => 'blastmainnet',
+    167009 => 'tko-hekla',
 
     728_126_428 => 'tron',
     2_494_104_990 => 'tron_shasta',
     43 => 'pangolin',
     44 => 'crab',
-    46 => 'darwinia'
+    46 => 'darwinia',
+    45 => 'tanssi_pangoro'
   }
 
   # https://chainid.network/chains.json
@@ -87,7 +89,8 @@ module Etherscan
     'scr' => 'https://api.scrollscan.com/api',
     'scr_sepolia' => 'https://api-sepolia.scrollscan.com/api',
     'obnb' => 'https://api-opbnb.bscscan.com/api',
-    'blastmainnet' => 'https://blast.blockscout.com/api'
+    'blastmainnet' => 'https://blast.blockscout.com/api',
+    'tko-hekla' => 'https://api.routescan.io/v2/network/testnet/evm/167009/etherscan/api'
   }
 
   # https://tronscan.org/#/developer/api
