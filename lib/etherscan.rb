@@ -41,6 +41,7 @@ module Etherscan
     534_352 => 'scr',
     534_351 => 'scr_sepolia',
     204 => 'obnb',
+    81457 => 'blastmainnet',
 
     728_126_428 => 'tron',
     2_494_104_990 => 'tron_shasta',
@@ -85,7 +86,8 @@ module Etherscan
     'wemix' => 'https://api.wemixscan.com/api',
     'scr' => 'https://api.scrollscan.com/api',
     'scr_sepolia' => 'https://api-sepolia.scrollscan.com/api',
-    'obnb' => 'https://api-opbnb.bscscan.com/api'
+    'obnb' => 'https://api-opbnb.bscscan.com/api',
+    'blastmainnet' => 'https://api.routescan.io/v2/network/mainnet/evm/81457/etherscan/api'
   }
 
   # https://tronscan.org/#/developer/api
