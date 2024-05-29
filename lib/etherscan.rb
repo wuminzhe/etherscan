@@ -90,7 +90,7 @@ module Etherscan
     'scr_sepolia' => 'https://api-sepolia.scrollscan.com/api',
     'obnb' => 'https://api-opbnb.bscscan.com/api',
     'blastmainnet' => 'https://blast.blockscout.com/api',
-    'tko-hekla' => 'https://api.routescan.io/v2/network/testnet/evm/167009/etherscan/api'
+    'tko_hekla' => 'https://api.routescan.io/v2/network/testnet/evm/167009/etherscan/api'
   }
 
   # https://tronscan.org/#/developer/api
