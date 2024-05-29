@@ -87,7 +87,7 @@ module Etherscan
     'scr' => 'https://api.scrollscan.com/api',
     'scr_sepolia' => 'https://api-sepolia.scrollscan.com/api',
     'obnb' => 'https://api-opbnb.bscscan.com/api',
-    'blastmainnet' => 'https://api.routescan.io/v2/network/mainnet/evm/81457/etherscan/api'
+    'blastmainnet' => 'https://blast.blockscout.com/api'
   }
 
   # https://tronscan.org/#/developer/api
